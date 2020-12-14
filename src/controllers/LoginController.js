@@ -14,13 +14,9 @@ export default class LoginController {
             const emailRegExp = new RegExp(/^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/)
             const isEmail = emailRegExp.test(email)
 
-            let validCredentials = false;
-            if (isEmail) {
-                validCredentials = await this.UserLogin.run(email, password)
-            } else {
-                validCredentials = false
-            }
+            if (!isEmail) throw new Error("Invalid input")
 
+            const validCredentials = await this.UserLogin.run(email, password)
 
             return validCredentials 
                 ? res.status(200).send("Valid credentials")
