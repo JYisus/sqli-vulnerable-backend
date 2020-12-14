@@ -7,8 +7,6 @@ export default class LoginController {
 
     async run(req, res) {
         try {
-            console.log(req.body)
-            console.log("akjsdhf")
             const {email, password} = req.body
             const validCredentials = await this.UserLogin.run(email, password)
 
@@ -16,7 +14,7 @@ export default class LoginController {
                 ? res.status(200).send("Valid credentials")
                 : res.status(401).send("Invalid credentials")
         } catch(err) {
-            console.log(err)
+            console.error(err)
             res.status(401).send("Invalid credentials")
         }
     }

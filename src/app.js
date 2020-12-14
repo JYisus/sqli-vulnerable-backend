@@ -5,6 +5,7 @@ import registerRoutes from "./routes/index.js"
 import NewsController from "./controllers/NewsGetController.js"
 import LoginController from "./controllers/LoginController.js"
 import MySQLRespository from "./news/infraestructure/MySQLRespository.js"
+import MongoRepository from "./news/infraestructure/MongoRepository.js"
 
 const app = express()
 
@@ -32,9 +33,10 @@ const dbConfig = {
     database: "sqli",
 }
 const repository = new MySQLRespository(dbConfig)
+const mongoRepository = new MongoRepository({databse: "test"})
 
-const newsController = new NewsController(repository)
-const loginController = new LoginController(repository)
+const newsController = new NewsController(mongoRepository)
+const loginController = new LoginController(mongoRepository)
 
 registerRoutes(router, newsController, loginController)
 

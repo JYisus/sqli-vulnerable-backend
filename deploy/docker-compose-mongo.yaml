@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    #environment:
+      #MONGO_INITDB_ROOT_USERNAME: root
+      #MONGO_INITDB_ROOT_PASSWORD: root
+      #MONGO_INITDB_DATABASE: nsqli
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '27017-27019:27017-27019'
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-inidb.d/init-mongo.js:ro
+      - ./mongo-volume:/data/db
+# Names our volume
+volumes:
+  my-mongo:
