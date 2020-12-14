@@ -7,10 +7,20 @@ export default class LoginController {
 
     async run(req, res) {
         try {
-            console.log(req.body)
-            console.log("akjsdhf")
+            // console.log(req.body)
+            // console.log("akjsdhf")
             const {email, password} = req.body
-            const validCredentials = await this.UserLogin.run(email, password)
+            
+            const emailRegExp = new RegExp(/^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/)
+            const isEmail = emailRegExp.test(email)
+
+            let validCredentials = false;
+            if (isEmail) {
+                validCredentials = await this.UserLogin.run(email, password)
+            } else {
+                validCredentials = false
+            }
+
 
             return validCredentials 
                 ? res.status(200).send("Valid credentials")
