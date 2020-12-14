@@ -15,16 +15,17 @@ export default class MySQLRespository {
     }
 
     async search(id) {
-        const result = await this.connection.query(`select * from news where Id='${id}';`)
+        const result = await this.connection.execute('call searchNew(?);', [id])
+        console.log(result[0][0][0])
         if(result[0].length < 1) {
             throw new Error(`New with id ${id} was not found`)
         }
-        return result[0][0]
+        return result[0][0][0]
     }
 
     async checkEmailAndPassword(email, password) {
-        const result = await this.connection.query(`select * from users where Email='${email}' and Password='${password}'`)
+        const result = await this.connection.execute('call checkLoginAndPassword(?,?)', [email, password])
         if(result[0].length < 1) return false
-        return result[0][0]
+        return result[0][0][0]
     }
 }
