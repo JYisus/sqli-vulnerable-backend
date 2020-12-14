@@ -8,7 +8,8 @@ export default class NewsController {
     // constructor()
     async run(req, res) {
         try {
-            const article = await this.NewsSearcher.run(req.query.id)
+            const { id } = req.query
+            const article = await this.NewsSearcher.run(id)
             res.status(200).send(article.json())
         } catch(err) {
             res.status(404).send({"id": "error", "datetime": "error", "text": "Not found"})

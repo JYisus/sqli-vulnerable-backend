@@ -7,8 +7,6 @@ export default class LoginController {
 
     async run(req, res) {
         try {
-            console.log(req.body)
-            console.log("akjsdhf")
             const {email, password} = req.body
             const validCredentials = await this.UserLogin.run(email, password)
 
